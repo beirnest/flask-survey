@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>{% block title %}Survey Home{% endblock %}</title>
+  </head>
+  <body>
+    {% block body %}
+        <h1>{{ title }}</h1>
+        <h2>{{ instructions }}</h2>
+        <form action="/questions/0">
+            <button type ="submit">Start</button>
+        </form>
+    {% endblock %}
+  <body>
+</html>
