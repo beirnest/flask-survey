@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, flash
+from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from surveys import Question, Survey, satisfaction_survey
 
@@ -8,7 +8,6 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 debug = DebugToolbarExtension(app)
 
-responses = []
 counter = [0]
 
 @app.route('/')
@@ -19,6 +18,11 @@ def root():
     instructions = satisfaction_survey.instructions
 
     return render_template("base.html", title = title, instructions = instructions)
+
+@app.route('/start', methods=["POST"])
+def start_survey():
+    session['responses'] = []
+    return redirect('/questions/0')
 
 @app.route('/questions/<question_number>')
 def show_questions(question_number):
@@ -41,7 +45,9 @@ def post_answers(question_number):
 
         answer = request.form["answer"]
 
+        responses = session['responses']
         responses.append(answer)
+        session['responses'] = responses
 
         question_num = int(question_number) + 1
 

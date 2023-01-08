@@ -6,7 +6,7 @@
     {% block body %}
         <h1>{{ title }}</h1>
         <h2>{{ instructions }}</h2>
-        <form action="/questions/0">
+        <form action="/start" method="POST">
             <button type ="submit">Start</button>
         </form>
     {% endblock %}
